@@ -4,7 +4,7 @@
 
 **Date:** February 10, 2026
 
-**Device OS:** 6.3.0 or later, tested using 6.3.4
+**Device OS:** 6.3.0 or later
 
 A location tracking application for Particle Gen 4 devices that intelligently combines GNSS, Wi-Fi, and cellular tower geolocation to provide robust positioning even in challenging environments. Features a non-blocking state machine architecture designed for easy expansion with future capabilities.
 
@@ -26,11 +26,25 @@ A location tracking application for Particle Gen 4 devices that intelligently co
 
 This application supports the following Particle Gen 4 devices with Quectel cellular modems:
 
-| Device | Modem | Platform | GNSS Support | Accuracy Parameters |
-|--------|-------|----------|--------------|---------------------|
-| **M404** | BG95-M5 | M-SoM | ✅ Yes | ✅ Horizontal & Vertical |
-| **M524** | EG91-EX | M-SoM | ✅ Yes | ❌ No accuracy params |
-| **B504e** | EG91-NAX | B5-SoM | ✅ Yes | ❌ No accuracy params |
+| Device | Modem | Platform | GNSS Support | Accuracy Parameters | Testing Status |
+|--------|-------|----------|--------------|---------------------|----------------|
+| **M404** | BG95-M5 | M-SoM | ✅ Yes | ✅ Horizontal & Vertical | ✅ Tested on Muon |
+| **M524** | EG91-EX | M-SoM | ✅ Yes | ❌ No accuracy params | ⚠️ Not tested |
+
+### ⚠️ B504E Not Supported
+
+The **B504E** (B5-SoM with EG91-NAX modem) is **not compatible** with this application due to RAM limitations:
+- B504E has only 256KB RAM vs 3MB on M404/M524
+- LocationFusionRK and QuectelGnssRK libraries require more RAM than available
+- Stack overflow errors occur even with minimal logging
+- **Recommendation:** Use M404 or M524 for location fusion applications
+
+### Testing Platform
+
+This application has been tested on:
+- **M404** module with **BG95-M5** modem
+- **Muon** carrier board
+- **Device OS 6.3.4**
 
 ### Important Hardware Limitations
 
@@ -40,10 +54,10 @@ The **BG95 modem cannot run GNSS and cellular data simultaneously**. This is a h
 - Cellular reconnects after GNSS timeout or fix is obtained
 - This is transparent to the user but may cause brief connectivity interruptions
 
-The M524 and B504e devices with EG91 modems do not have this limitation.
+The M524 device with EG91 modem does not have this limitation.
 
 #### Accuracy Parameter Support
-Only the BG95 modem (M404) provides horizontal and vertical accuracy estimates in the GNSS data. The EG91 modems (M524, B504e) provide position but without accuracy metadata.
+Only the BG95 modem (M404) provides horizontal and vertical accuracy estimates in the GNSS data. The EG91 modem (M524) provides position but without accuracy metadata.
 
 
 ---
