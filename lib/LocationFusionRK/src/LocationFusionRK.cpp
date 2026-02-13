@@ -31,7 +31,7 @@ LocationFusionRK &LocationFusionRK::withCmdHandler(const char *cmd, std::functio
 void LocationFusionRK::setup() {
     os_mutex_create(&mutex);
 
-    thread = new Thread("LocationFusionRK", [this]() { return threadFunction(); }, OS_THREAD_PRIORITY_DEFAULT, 3072);
+    thread = new Thread("LocationFusionRK", [this]() { return threadFunction(); }, OS_THREAD_PRIORITY_DEFAULT, threadStackSize);
 
     if (enableCmdFunction) {
         Particle.function("cmd", functionHandlerStatic);

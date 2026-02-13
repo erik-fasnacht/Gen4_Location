@@ -57,6 +57,10 @@ See example 2-enhanced-callback.
 
 ## Version history
 
+### 0.0.4 (2026-02-13)
+
+- Increased worker thread stack size to 6144. In 0.0.3 and earlier it was 3072. You can customize this using withThreadStackSize() before setup().
+
 ### 0.0.3 (2026-01-29)
 
 - Added getStatus() and withStatusHandler() methods. These can be used to know if the publish completed, or if the library is idle for sleep control.

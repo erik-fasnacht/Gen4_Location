@@ -30,20 +30,14 @@ This application supports the following Particle Gen 4 devices with Quectel cell
 |--------|-------|----------|--------------|---------------------|----------------|
 | **M404** | BG95-M5 | M-SoM | ✅ Yes | ✅ Horizontal & Vertical | ✅ Tested on Muon |
 | **M524** | EG91-EX | M-SoM | ✅ Yes | ❌ No accuracy params | ⚠️ Not tested |
-
-### ⚠️ B504E Not Supported
-
-The **B504E** (B5-SoM with EG91-NAX modem) is **not compatible** with this application due to RAM limitations:
-- B504E has only 256KB RAM vs 3MB on M404/M524
-- LocationFusionRK and QuectelGnssRK libraries require more RAM than available
-- Stack overflow errors occur even with minimal logging
-- **Recommendation:** Use M404 or M524 for location fusion applications
+| **B504e** | EG91-NAX | B5-SoM | ✅ Yes | ❌ No accuracy params | ✅ Tested |
 
 ### Testing Platform
 
 This application has been tested on:
 - **M404** module with **BG95-M5** modem
-- **Muon** carrier board
+- **B504e** module with **EG91-NAX** modem
+- **Muon** carrier board (for M404 and B504e)
 - **Device OS 6.3.4**
 
 ### Important Hardware Limitations
@@ -73,14 +67,14 @@ Provides GNSS support for Particle devices with Quectel cellular modems that inc
 - **Purpose:** Interfaces with the cellular modem's built-in GNSS receiver
 - **Features:** Asynchronous API, configurable timeouts, accuracy parameters (BG95 only)
 
-### 2. LocationFusionRK (v0.0.3)
+### 2. LocationFusionRK (v0.0.4)
 Orchestrates location fusion using multiple sources and integrates with Particle's cloud-enhanced location services.
 
 - **Repository:** https://github.com/rickkas7/LocationFusionRK
 - **Purpose:** Combines GNSS, Wi-Fi, and cellular tower data for robust location
 - **Features:** Automatic fallback, cloud-enhanced responses, extensible data sources
 
-> **⚠️ Version Requirement:** This application requires v0.0.3 or later of LocationFusionRK. The state machine implementation uses the `getStatus()` API which is only available in v0.0.3+.
+> **⚠️ Version Requirement:** This application requires v0.0.4 or later of LocationFusionRK. The B504e device support requires the increased worker thread stack size available in v0.0.4+.
 
 ---
 
@@ -361,7 +355,7 @@ The state machine logs transitions and provides periodic status updates every 30
 2. **Install dependencies:**
 
    Dependencies are defined in [project.properties](project.properties) and will be automatically installed during compilation:
-   - LocationFusionRK v0.0.3
+   - LocationFusionRK v0.0.4
    - QuectelGnssRK v0.0.1
 
 3. **Compile and flash:**

@@ -383,6 +383,18 @@ public:
      */
     LocationFusionRK &withStatusHandler(const char *cmd, std::function<void(Status)> handler) { statusHandlers.push_back(handler); return *this; };
 
+
+    /**
+     * @brief Sets the worker thread stack size. Must be set before setup()
+     * 
+     * @param size in bytes. The default if you do not call this is 6144
+     * @return LocationFusionRK& 
+     * 
+     * Prior to version 0.0.4 the stack was 3072 bytes, but it was increased due to SOS+13 on b5som devices. You can further
+     * customize the size by calling this method prior to setup().
+     */
+    LocationFusionRK &withThreadStackSize(size_t size) { threadStackSize = size; return *this; };
+
     /**
      * @brief Request a publish now
      * 
@@ -567,6 +579,11 @@ protected:
      * This is initialized in setup() so make sure you call the setup() method from the global application setup.
      */
     Thread *thread = 0;
+
+    /**
+     * @brief Size of the work thread stack. Must set before setup()
+     */
+    size_t threadStackSize = 6144;
 
     /**
      * @brief How often to publish (manual, once, periodic)
